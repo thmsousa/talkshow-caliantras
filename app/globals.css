@@ -1,26 +1,45 @@
-@import "tailwindcss";
+/* app/globals.css */
 
+/* Definição das cores Caliandra e Amarelo como variáveis CSS */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-c: #D21B48; /* Caliandra Principal (Vermelho/Rosa) */
+  --color-dark: #121212;    /* Preto Suave (Para Cards e Header) */
+  --color-accent: #FFD700;  /* Amarelo (Destaques) */
+  --color-text: #ffffff;    /* Texto Branco */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Aplicando o fundo Caliandra e texto branco ao corpo */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* DEGRADÊ: Do Rosa Caliandra para um Tom Vinho Escuro */
+  background: linear-gradient(180deg, #D21B48 0%, #58081c 100%);
+  background-attachment: fixed; /* O fundo fica fixo ao rolar */
+  min-height: 100vh;
+  
+  color: var(--color-text); /* Texto do corpo é branco */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo para o container principal (centralização) */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Reset básico para links */
+a {
+  color: white; /* Cor dos links na navegação */
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Estilo de lista para remover bullet points */
+ul {
+    list-style: none;
+    padding: 0;
 }
