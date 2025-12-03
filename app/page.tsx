@@ -170,7 +170,7 @@ export default function HomePage() {
                                         alt={`Capa: ${episodio.titulo}`}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 33vw"
-                                        style={{ objectFit: 'cover', objectPosition: '50% 70%' }}
+                                        style={{ objectFit: 'cover', objectPosition: '50% 30%' }}
                                     />
                                 </div>
                                 
