@@ -5,7 +5,7 @@ import NavbarClient from './NavbarClient';
 
 export default function Header() {
   return (
-    // Fundo Preto Escuro
+    // Fundo Preto
     <header style={{ 
       backgroundColor: 'var(--color-dark)', 
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)', 

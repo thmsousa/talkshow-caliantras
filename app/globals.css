@@ -1,45 +1,116 @@
 /* app/globals.css */
 
-/* Definição das cores Caliandra e Amarelo como variáveis CSS */
 :root {
-  --color-c: #D21B48; /* Caliandra Principal (Vermelho/Rosa) */
-  --color-dark: #121212;    /* Preto Suave (Para Cards e Header) */
+  --color-c: #D21B48;    /* Caliandra Principal (Blocos/Rosa) */
+  --color-dark: #121212; /* Preto Suave (Header/Footer/Texto) */
   --color-accent: #FFD700;  /* Amarelo (Destaques) */
-  --color-text: #ffffff;    /* Texto Branco */
+  --color-text: #121212;    /* NOVO: Texto Principal será Preto */
 }
 
-/* Aplicando o fundo Caliandra e texto branco ao corpo */
+/* Aplicando o fundo Branco e texto Preto */
 body {
-  /* DEGRADÊ: Do Rosa Caliandra para um Tom Vinho Escuro */
-  background: linear-gradient(180deg, #D21B48 0%, #58081c 100%);
-  background-attachment: fixed; /* O fundo fica fixo ao rolar */
-  min-height: 100vh;
-  
-  color: var(--color-text); /* Texto do corpo é branco */
+  background-color: #ffffff; /* FUNDO AGORA É BRANCO */
+  color: var(--color-text);  /* Texto do corpo é Preto */
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
-/* Estilo para o container principal (centralização) */
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Reset básico para links */
+/* Links fora dos blocos: serão Pretos */
 a {
-  color: white; /* Cor dos links na navegação */
+  color: var(--color-dark); 
   text-decoration: none;
   transition: opacity 0.2s;
 }
 
-a:hover {
-  opacity: 0.8;
+a:hover { opacity: 0.8; }
+ul { list-style: none; padding: 0; }
+
+/* app/globals.css (Adicionar no final do arquivo) */
+
+/* 1. Definição da Perspectiva para simular o 3D */
+@keyframes book-open-right {
+    0% { 
+        transform: perspective(2000px) rotateY(0deg); /* Aumente a perspectiva */
+    }
+    100% { 
+        transform: perspective(2000px) rotateY(-180deg); 
+        opacity: 0; 
+    }
 }
 
-/* Estilo de lista para remover bullet points */
-ul {
-    list-style: none;
-    padding: 0;
+@keyframes book-open-left {
+    0% { 
+        transform: perspective(2000px) rotateY(0deg); /* Aumente a perspectiva */
+    }
+    100% { 
+        transform: perspective(2000px) rotateY(180deg); 
+        opacity: 0; 
+    }
+}
+
+/* 2. Classes para o React usar */
+.page-right {
+    transform-origin: left; /* A rotação começa no lado esquerdo do elemento */
+    animation: book-open-right 2.0s ease-out forwards;
+}
+
+.page-left {
+    transform-origin: right; /* A rotação começa no lado direito do elemento */
+    animation: book-open-left 2.0s ease-out forwards;
+}
+
+/* 3. Estilo base para garantir o 3D durante a animação */
+.book-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+
+/* === MEDIA QUERIES PARA RESPONSIVIDADE === */
+
+/* 1. LAYOUT PARA TABLETS (Telas com até 992px) */
+@media (max-width: 992px) {
+    /* Ajusta o container principal para centralizar melhor */
+    .container {
+        width: 95%; 
+    }
+    
+    /* Regra para a Página de Vídeo: Sidebar fica abaixo */
+    .episodio-container > div {
+        flex-direction: column; /* Transforma a descrição e sidebar em pilha vertical */
+    }
+}
+
+
+/* 2. LAYOUT PARA MOBILE (Telas com até 600px) */
+@media (max-width: 600px) {
+    /* Reduz o tamanho da fonte do Título Principal da Home */
+    h1 {
+        font-size: 28px !important; /* !important usado para sobrescrever inline style */
+        word-break: break-word;
+    }
+
+    /* Reduz o tamanho da fonte dos subtítulos */
+    h2 {
+        font-size: 22px !important;
+    }
+
+    /* Reduz o padding do banner para economizar espaço vertical */
+    .section-banner {
+        padding: 40px 15px !important; 
+    }
+
+    /* Oculta a navegação secundária no Header (se você tiver um menu mobile, ele aparecerá aqui) */
+    nav ul {
+        display: none;
+    }
 }
