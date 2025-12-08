@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const navItems = [
     { name: 'Vídeos', href: '/videos' },
-    { name: 'Materiais', href: '/materias' },
+    { name: 'Materiais', href: '/materiais' },
     { name: 'Autores', href: '/autores' },
     { name: 'Sobre', href: '/sobre' }, 
 ];
@@ -15,7 +15,7 @@ export default function NavbarClient() {
         <nav>
             <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
                 {navItems.map((item) => (
-                    <li key={item.name} style={{ marginLeft: '25px' }}>
+                    <li key={item.name} style={{ marginLeft: '50px' }}>
                         <Link 
                             href={item.href} 
                             style={{ color: 'white', fontWeight: 'bold' }}

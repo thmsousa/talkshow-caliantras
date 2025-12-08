@@ -1,5 +1,5 @@
 // app/page.tsx
-'use client'; // ESSENCIAL para usar useState, useEffect (Transição)
+'use client'; 
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -11,16 +11,63 @@ import { Episodio } from './components/utils/types';
 // Chave para armazenar no navegador para verificar se o usuário já viu o splash
 const SPLASH_KEY = 'hasSeenSplash'; 
 
-// --- MOCK DATA (Simulação de Dados) ---
+// --- MOCK DATA (Simulação de Dados - Lista Completa reintegrada) ---
+const TODOS_EPISODIOS: Episodio[] = [
+    {
+        id: '1',
+        titulo: 'Ep. 1: Talkshow - Biblioteca (IFTO - Palmas)',
+        slug: 'ep-1-biblioteca',
+        dataLancamento: '2025-11-24T12:00:00',
+        urlVideo: 'lGyrgOFSn1U',
+        descricao: 'Explorando as vertentes da obra "Espiríto Ilícitio", na Biblioteca do Campus Palmas.',
+        imagemCapaUrl: '/images/mock/pablo_cover.jpg'
+    },
+    {
+        id: '2',
+        titulo: 'Ep. 2: Talkshow - CEM Santa Rita de Cássia',
+        slug: 'ep-2-cem-rita-de-cassia',
+        dataLancamento: '2025-11-28T12:00:00',
+        urlVideo: 'Rx15dflY9DA',
+        descricao: 'Conversa com alunos e professores no CEM Santa Rita de Cássia.',
+        imagemCapaUrl: '/images/mock/cover_cemrdc.jpg'
+    },
+    {
+        id: '3',
+        titulo: 'Ep. 4: Talkshow - Literatura Regional',
+        slug: 'ep-3-literatura-regional',
+        dataLancamento: '2025-11-18T12:00:00',
+        urlVideo: 'lGyrgOFSn1U',
+        descricao: 'Debate sobre literatura regional e produção cultural.',
+        imagemCapaUrl: '/images/mock/cover_lr.jpg'
+    },
+    {
+        id: '4', 
+        titulo: 'Ep. 4: Entrevista Exclusiva (O Mais Novo)', 
+        slug: 'ep-4-entrevista-recente', 
+        dataLancamento: '2025-12-05T10:00:00', 
+        urlVideo: 'SEU_ID_YOUTUBE', 
+        descricao: 'O vídeo mais recente e atualizado da série.',
+        imagemCapaUrl: '/images/mock/capa_recente.jpg'
+    },
+    // adc mais episodios
+
+];
+
+// Função de busca que ORDENA e LIMITA
 const getDestaques = async (): Promise<Episodio[]> => {
-    // Simula um pequeno delay de carregamento
     await new Promise(resolve => setTimeout(resolve, 500)); 
     
-    return [
-      { id: '1', titulo: 'Ep. 1: Talkshow - Biblioteca (IFTO - Palmas)', slug: 'ep-1-biblioteca', dataLancamento: '2025-11-24T12:00:00', urlVideo: 'lGyrgOFSn1U', descricao: 'Explorando as vertentes da obra "Espiríto Ilícitio", na Biblioteca do Campus Palmas.', imagemCapaUrl: '/images/mock/pablo_cover.jpg' },
-      { id: '2', titulo: 'Ep. 2: Talkshow - CEM Santa Rita de Cássia', slug: 'ep-2-cem-rita-de-cassia', dataLancamento: '2025-11-28T12:00:00', urlVideo: '', descricao: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, incidunt quam! Aspernatur ducimus odio molestias dolorum totam vel delectus cumque quam corporis perspiciatis deserunt, consequatur facilis iure dolorem, modi est.', imagemCapaUrl: '/images/mock/cover_cemrdc.jpg' }, 
-      { id: '3', titulo: 'Ep. 3: Talkshow - Literatura Regional', slug: 'ep-3-literatura-regional', dataLancamento: '2025-11-18T12:00:00', urlVideo: '', descricao: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid, incidunt quam! Aspernatur ducimus odio molestias dolorum totam vel delectus cumque quam corporis perspiciatis deserunt, consequatur facilis iure dolorem, modi est.', imagemCapaUrl: '/images/mock/cover_lr.jpg' },
-    ];
+    // 1. Cria uma cópia e ordena por data (mais recente primeiro)
+    const sortedDestaques = TODOS_EPISODIOS
+        .slice() 
+        .sort((a, b) => {
+            const dateA = new Date(a.dataLancamento).getTime();
+            const dateB = new Date(b.dataLancamento).getTime();
+            return dateB - dateA; // Ordena do mais novo (B) para o mais velho (A)
+        });
+
+    // 2. Limita a lista aos 3 primeiros resultados
+    return sortedDestaques.slice(0, 3);
 };
 
 // Formatação de Data
@@ -107,7 +154,7 @@ export default function HomePage() {
                 </p>
                 
                 <Link 
-                    href={`/videos/${destaques[0].slug}`} 
+                    href={`/videos/${destaques[0].slug}`}
                     style={{ 
                         display: 'inline-block',
                         backgroundColor: 'var(--color-accent)', // Amarelo
@@ -135,7 +182,7 @@ export default function HomePage() {
                     marginBottom: '30px',
                     color: 'var(--color-dark)' // Texto PRETO no fundo BRANCO
                 }}>
-                    📺 Últimos Vídeos
+                    Últimos Vídeos
                 </h2>
                 
                 {/* Grid Container (Com classe para responsividade) */}

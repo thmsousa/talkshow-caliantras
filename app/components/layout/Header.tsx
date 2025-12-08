@@ -11,7 +11,7 @@ export default function Header() {
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)', 
       position: 'sticky', top: 0, zIndex: 10 
     }}>
-      <div className="container" style={{ padding: '15px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="container" style={{ padding: '25px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         
         {/* Título Amarelo (Accent) */}
         <Link 

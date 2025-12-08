@@ -3,7 +3,7 @@
 :root {
   --color-c: #D21B48;    /* Caliandra Principal (Blocos/Rosa) */
   --color-dark: #121212; /* Preto Suave (Header/Footer/Texto) */
-  --color-accent: #FFD700;  /* Amarelo (Destaques) */
+  --color-accent: #b12323;  /*  (Destaques) */
   --color-text: #121212;    /* NOVO: Texto Principal será Preto */
 }
 
@@ -87,6 +87,10 @@ ul { list-style: none; padding: 0; }
     /* Regra para a Página de Vídeo: Sidebar fica abaixo */
     .episodio-container > div {
         flex-direction: column; /* Transforma a descrição e sidebar em pilha vertical */
+    }
+
+    .episodio-container-inner {
+        flex-direction: column;
     }
 }
 

@@ -15,4 +15,5 @@ export type Autor = {
     nomeCompleto: string; 
     fotoUrl: string; 
     slug: string; 
+    bio: String;
 };
