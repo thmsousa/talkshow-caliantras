@@ -1,33 +1,8 @@
 // app/autores/page.tsx
-import Link from 'next/link';
+import { TODOS_AUTORES } from '@/lib/mockData'; // Centralizado
 import { Autor } from '../components/utils/types'; 
 import AuthorCard from './AuthorCard'; 
 
-// Lista MOCK de Autores/Convidados
-export const TODOS_AUTORES: Autor[] = [
-    {
-        id: 'a1',
-        nomeCompleto: 'Pablo Costa',
-        fotoUrl: '/images/mock/pablo_cover.jpg', 
-        slug: 'pablo-costa',
-        bio: "teste1"
-    },
-    {
-        id: 'a2',
-        nomeCompleto: 'Gleicielly Medeiros',
-        fotoUrl: '/images/mock/gleicy_autor.jpg', 
-        slug: 'gleicielly-medeiros',
-        bio: "teste1"
-    },
-    {
-        id: 'a3',
-        nomeCompleto: 'Nayra',
-        fotoUrl: '/images/mock/nayra.jpg', 
-        slug: 'nayra',
-        bio: "teste123232323"
-    },
-    // adc mais autores 
-];
 
 // Função que simula a busca de todos os autores (Server side)
 async function getTodosAutores(): Promise<Autor[]> {

@@ -5,53 +5,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image'; 
 import SplashScreen from './components/ui/SplashScreen'; 
-// CORREÇÃO: Importa o tipo do arquivo centralizado (utils/types.ts)
 import { Episodio } from './components/utils/types'; 
+import { TODOS_EPISODIOS } from '@/lib/mockData'; // Centralizado
 
 // Chave para armazenar no navegador para verificar se o usuário já viu o splash
 const SPLASH_KEY = 'hasSeenSplash'; 
 
-// --- MOCK DATA (Simulação de Dados - Lista Completa reintegrada) ---
-const TODOS_EPISODIOS: Episodio[] = [
-    {
-        id: '1',
-        titulo: 'Ep. 1: Talkshow - Biblioteca (IFTO - Palmas)',
-        slug: 'ep-1-biblioteca',
-        dataLancamento: '2025-11-24T12:00:00',
-        urlVideo: 'lGyrgOFSn1U',
-        descricao: 'Explorando as vertentes da obra "Espiríto Ilícitio", na Biblioteca do Campus Palmas.',
-        imagemCapaUrl: '/images/mock/pablo_cover.jpg'
-    },
-    {
-        id: '2',
-        titulo: 'Ep. 2: Talkshow - CEM Santa Rita de Cássia',
-        slug: 'ep-2-cem-rita-de-cassia',
-        dataLancamento: '2025-11-28T12:00:00',
-        urlVideo: 'Rx15dflY9DA',
-        descricao: 'Conversa com alunos e professores no CEM Santa Rita de Cássia.',
-        imagemCapaUrl: '/images/mock/cover_cemrdc.jpg'
-    },
-    {
-        id: '3',
-        titulo: 'Ep. 4: Talkshow - Literatura Regional',
-        slug: 'ep-3-literatura-regional',
-        dataLancamento: '2025-11-18T12:00:00',
-        urlVideo: 'lGyrgOFSn1U',
-        descricao: 'Debate sobre literatura regional e produção cultural.',
-        imagemCapaUrl: '/images/mock/cover_lr.jpg'
-    },
-    {
-        id: '4', 
-        titulo: 'Ep. 4: Entrevista Exclusiva (O Mais Novo)', 
-        slug: 'ep-4-entrevista-recente', 
-        dataLancamento: '2025-12-05T10:00:00', 
-        urlVideo: 'SEU_ID_YOUTUBE', 
-        descricao: 'O vídeo mais recente e atualizado da série.',
-        imagemCapaUrl: '/images/mock/capa_recente.jpg'
-    },
-    // adc mais episodios
-
-];
 
 // Função de busca que ORDENA e LIMITA
 const getDestaques = async (): Promise<Episodio[]> => {
@@ -192,7 +151,7 @@ export default function HomePage() {
                 >
                     {destaques.map(episodio => (
                         
-                        /* CARD INDIVIDUAL: Fundo Caliandra/Rosa */
+                        /* CARD INDIVIDUAL */
                         <div 
                             key={episodio.id} 
                             style={{ 

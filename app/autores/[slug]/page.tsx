@@ -1,11 +1,9 @@
 // app/autores/[slug]/page.tsx
 
-import Link from 'next/link';
+import Image from 'next/image'; 
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-
+import { TODOS_AUTORES } from '@/lib/mockData'; // Centralizado
 import { Autor } from '../../components/utils/types'; 
-import { TODOS_AUTORES } from '../page'; 
 
 // --------------------------------------------------
 // MOCK API: Função de busca do Autor por slug

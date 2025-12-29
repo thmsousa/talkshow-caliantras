@@ -1,144 +1,116 @@
-// app/videos/page.tsx
 'use client'; 
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Episodio } from '../components/utils/types'; 
+import { Search } from 'lucide-react'; 
+import { TODOS_EPISODIOS } from '@/lib/mockData'; // Importa dados centralizados
+import { Episodio } from '../components/utils/types';
 
-// --- 1. MOCK DATA (Lista Completa Integrada, na ordem desejada) ---
-const TODOS_EPISODIOS: Episodio[] = [
-    {
-        id: '1',
-        titulo: 'Ep. 1: Talkshow - Biblioteca (IFTO - Palmas)',
-        slug: 'ep-1-biblioteca',
-        dataLancamento: '2025-11-24T12:00:00',
-        urlVideo: 'lGyrgOFSn1U',
-        descricao: 'Explorando as vertentes da obra "Espiríto Ilícitio", na Biblioteca do Campus Palmas.',
-        imagemCapaUrl: '/images/mock/pablo_cover.jpg'
-    },
-    {
-        id: '2',
-        titulo: 'Ep. 2: Talkshow - CEM Santa Rita de Cássia',
-        slug: 'ep-2-cem-rita-de-cassia',
-        dataLancamento: '2025-11-28T12:00:00',
-        urlVideo: 'Rx15dflY9DA',
-        descricao: 'Conversa com alunos e professores no CEM Santa Rita de Cássia.',
-        imagemCapaUrl: '/images/mock/cover_cemrdc.jpg'
-    },
-    {
-        id: '3',
-        titulo: 'Ep. 3: Talkshow - Literatura Regional',
-        slug: 'ep-3-literatura-regional',
-        dataLancamento: '2025-11-18T12:00:00',
-        urlVideo: 'dQw4w9WgXcQ',
-        descricao: 'Debate sobre literatura regional e produção cultural.',
-        imagemCapaUrl: '/images/mock/cover_lr.jpg'
-    },
-    {
-        id: '4', 
-        titulo: 'Ep. 4: Entrevista Exclusiva (O Mais Novo)', 
-        slug: 'ep-4-entrevista-recente', 
-        dataLancamento: '2025-12-05T10:00:00', 
-        urlVideo: 'SEU_ID_YOUTUBE', 
-        descricao: 'O vídeo mais recente e atualizado da série.',
-        imagemCapaUrl: '/images/mock/capa_recente.jpg'
-    },
-];
-
-const formatDate = (dateString: string) => {
-    try {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-    } catch (e) {
-        return dateString;
-    }
-};
-
-// 2. Função que retorna a lista sem ordenação (mantendo a ordem por ID/inserção)
-const getTodosOsVideos = (): Episodio[] => {
-    return TODOS_EPISODIOS; 
-};
-
-
-// 3. COMPONENTE DA PÁGINA
 export default function VideosIndexPage() {
-    // Busca a lista completa na ordem definida no MOCK
-    const videos = getTodosOsVideos();
+    const [busca, setBusca] = useState('');
+    const [videosFiltrados, setVideosFiltrados] = useState<Episodio[]>(TODOS_EPISODIOS);
+
+    // Efeito para filtrar a lista de vídeos conforme a pesquisa
+    useEffect(() => {
+        const termoBusca = busca.toLowerCase();
+        const resultados = TODOS_EPISODIOS.filter(episodio => 
+            episodio.titulo.toLowerCase().includes(termoBusca) || 
+            episodio.descricao.toLowerCase().includes(termoBusca)
+        );
+        setVideosFiltrados(resultados);
+    }, [busca]);
+
+    // Lógica para verificar se o vídeo foi lançado nos últimos 7 dias
+    const isNovo = (dateString: string) => {
+        const dataLancamento = new Date(dateString);
+        const hoje = new Date();
+        // Constante de 7 dias convertida para milissegundos
+        const seteDiasEmMs = 7 * 24 * 60 * 60 * 1000;
+        return (hoje.getTime() - dataLancamento.getTime()) < seteDiasEmMs;
+    };
+
+    const formatDate = (dateString: string) => {
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+        } catch (e) { return dateString; }
+    };
 
     return (
-        <div style={{ padding: '0px', color: 'var(--color-dark)', backgroundColor: 'transparent' }}>
-            
-            {/* TÍTULO PRINCIPAL */}
-            <h1 style={{ 
-                fontSize: '36px', 
-                fontWeight: 'bold', 
-                color: 'var(--color-dark)', 
-                borderBottom: '4px solid var(--color-accent)', 
-                paddingBottom: '15px',
-                marginBottom: '40px'
-            }}>
-                Catálogo Completo de Vídeos
-            </h1>
-            
-            {/* GRID CONTAINER PARA TODOS OS VÍDEOS */}
-            <div 
-                className="section-cards" 
-                style={{ 
-                    display: 'flex', 
-                    gap: '25px', 
-                    flexWrap: 'wrap', 
-                    justifyContent: 'flex-start' 
-                }}
-            >
-                {videos.map(episodio => (
-                    
-                    /* CARD INDIVIDUAL */
-                    <div 
-                        key={episodio.id} 
-                        style={{ 
-                            flex: '0 0 calc(33.33% - 17px)', 
-                            maxWidth: '350px', 
-                            minWidth: '280px',
-                            backgroundColor: 'var(--color-dark)', 
-                            borderRadius: '12px',
-                            overflow: 'hidden',
-                            boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
-                            transition: 'transform 0.3s ease',
-                            cursor: 'pointer'
+        <div style={{ padding: '20px 0', color: 'var(--color-dark)' }}>
+            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+                <h1 style={{ fontSize: '42px', fontWeight: '900', marginBottom: '10px' }}>Catálogo de Vídeos</h1>
+                <div style={{ width: '60px', height: '4px', backgroundColor: 'var(--color-accent)', margin: '0 auto 30px' }} />
+
+                {/* BARRA DE BUSCA POLIDA */}
+                <div style={{ maxWidth: '600px', margin: '0 auto', position: 'relative', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                    <input 
+                        type="text" 
+                        placeholder="Pesquisar episódios..." 
+                        value={busca}
+                        onChange={(e) => setBusca(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '16px 25px',
+                            paddingRight: '55px', 
+                            fontSize: '16px',
+                            borderRadius: '50px',
+                            border: '1px solid #eee',
+                            outline: 'none',
+                            transition: 'all 0.3s ease',
+                            backgroundColor: '#fff',
                         }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                    />
+                    <div style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', color: '#888' }}>
+                        <Search size={20} strokeWidth={2.5} />
+                    </div>
+                </div>
+            </div>
+            
+            {/* GRID DE CARDS COM LÓGICA DE SELO DE 7 DIAS */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '30px', padding: '10px' }}>
+                {videosFiltrados.map(episodio => (
+                    <div key={episodio.id} 
+                        style={{ 
+                            backgroundColor: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 15px 35px rgba(0,0,0,0.08)',
+                            transition: 'transform 0.4s ease', cursor: 'pointer', border: '1px solid #f0f0f0'
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-10px)'}
                         onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                     >
-                        <Link href={`/videos/${episodio.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                            
-                            {/* Thumbnail da Imagem */}
-                            <div style={{ position: 'relative', width: '100%', height: '180px', backgroundColor: 'var(--color-dark)' }}>
-                                <Image
-                                    src={episodio.imagemCapaUrl || '/images/placeholder.jpg'}
-                                    alt={`Capa: ${episodio.titulo}`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                    style={{ objectFit: 'cover', objectPosition: '50% 30%' }}
-                                />
+                        <Link href={`/videos/${episodio.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div style={{ position: 'relative', width: '100%', height: '200px' }}>
+                                <Image src={episodio.imagemCapaUrl} alt={episodio.titulo} fill style={{ objectFit: 'cover', objectPosition: '50% 30%' }} />
+                                
+                                {/* SELO APARECE APENAS SE TIVER MENOS DE 7 DIAS */}
+                                {isNovo(episodio.dataLancamento) && (
+                                    <div style={{ 
+                                        position: 'absolute', top: '15px', left: '15px', backgroundColor: 'var(--color-accent)',
+                                        color: '#fff', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: 'bold'
+                                    }}>
+                                        Novo
+                                    </div>
+                                )}
                             </div>
-                            
-                            {/* Conteúdo do Card */}
-                            <div style={{ padding: '20px' }}>
-                                <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: 'white', marginBottom: '10px', lineHeight: '1.4' }}>
-                                    {episodio.titulo}
-                                </h3>
-                                <p style={{ fontSize: '13px', color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '10px' }}>
-                                    {formatDate(episodio.dataLancamento)}
-                                </p>
-                                <p style={{ fontSize: '14px', color: 'white', lineHeight: '1.5' }}>
-                                    {episodio.descricao.length > 80 ? episodio.descricao.substring(0, 100) + '...' : episodio.descricao}
+                            <div style={{ padding: '25px' }}>
+                                <p style={{ fontSize: '12px', color: '#888', fontWeight: '600', marginBottom: '8px' }}>{formatDate(episodio.dataLancamento)}</p>
+                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '12px' }}>{episodio.titulo}</h3>
+                                <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', WebkitLineClamp: 2, display: '-webkit-box', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                    {episodio.descricao}
                                 </p>
                             </div>
-
                         </Link>
                     </div>
                 ))}
             </div>
+
+            {/* FEEDBACK SE NÃO HOUVER RESULTADOS */}
+            {videosFiltrados.length === 0 && (
+                <div style={{ textAlign: 'center', padding: '50px' }}>
+                    <p style={{ color: '#999' }}>Nenhum vídeo encontrado para a sua pesquisa.</p>
+                </div>
+            )}
         </div>
     );
 }
