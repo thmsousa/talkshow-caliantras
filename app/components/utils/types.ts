@@ -8,6 +8,7 @@ export type Episodio = {
   urlVideo: string; 
   descricao: string; 
   imagemCapaUrl: string; 
+  autorId: String;
 }; 
 
 export type Autor = { 
@@ -17,3 +18,14 @@ export type Autor = {
     slug: string; 
     bio: String;
 };
+
+export type Produto = { 
+    titulo: string; 
+    preco: string; 
+    imagemUrl: string; 
+    descricao: string; 
+    linkCompra: String;
+    categoria: String;
+
+};
+

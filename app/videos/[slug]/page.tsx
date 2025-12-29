@@ -1,96 +1,129 @@
-// app/videos/[slug]/page.tsx
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { TODOS_EPISODIOS, TODOS_AUTORES } from '@/lib/mockData'; // Dados centralizados
-import { Episodio, Autor } from '../../components/utils/types'; 
-import styles from './EpisodioPage.module.css'; 
+import { TODOS_EPISODIOS, TODOS_AUTORES } from '@/lib/mockData';
+import styles from './EpisodioPage.module.css';
 
-// 1. SEO Dinâmico: Define o título da aba do navegador conforme o vídeo
+// Função auxiliar para formatar a data de forma amigável
+const formatDate = (dateString: string) => {
+    try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR', { 
+            day: '2-digit', 
+            month: 'long', 
+            year: 'numeric' 
+        });
+    } catch (e) { return dateString; }
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const episodio = TODOS_EPISODIOS.find((ep) => ep.slug === slug);
-  
-  return {
-    title: `${episodio?.titulo || 'Vídeo'} | Caliantras Talk Show`,
-    description: episodio?.descricao.substring(0, 160),
-  };
-}
-
-// 2. Busca de Dados centralizada
-async function getEpisodioData(slug: string): Promise<{ episodio: Episodio; autor: Autor; relacionados: Episodio[] } | null> {
-  const episodio = TODOS_EPISODIOS.find((ep) => ep.slug === slug);
-  if (!episodio) return null;
-
-  // Busca o autor (Exemplo: Pablo Costa como padrão para simplificar)
-  const autor = TODOS_AUTORES[0]; 
-
-  // Sugestão de vídeos relacionados (outros episódios que não o atual)
-  const relacionados = TODOS_EPISODIOS.filter((ep) => ep.slug !== slug).slice(0, 3);
-
-  return { episodio, autor, relacionados };
+  return { title: `${episodio?.titulo || 'Vídeo'} | Caliantras` };
 }
 
 export default async function EpisodioPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const data = await getEpisodioData(slug);
+  const episodio = TODOS_EPISODIOS.find((ep) => ep.slug === slug);
 
-  if (!data) return notFound();
+  if (!episodio) return notFound();
 
-  const { episodio, autor, relacionados } = data;
+  // Lógica para encontrar o autor específico deste vídeo
+  const autorRelacionado = TODOS_AUTORES.find(a => a.id === episodio.autorId) || TODOS_AUTORES[0];
+  
+  const relacionados = TODOS_EPISODIOS.filter((ep) => ep.slug !== slug).slice(0, 4);
   const embedUrl = `https://www.youtube.com/embed/${episodio.urlVideo}?autoplay=0&rel=0`;
 
   return (
     <div className={styles.mainContainer}>
-      {/* TÍTULO E PLAYER */}
+      {/* Título Moderno */}
       <h1 className={styles.title}>{episodio.titulo}</h1>
 
-      <div className={styles.playerWrapper}>
-        <iframe
-          src={embedUrl}
-          title={`Player do YouTube para ${episodio.titulo}`}
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          className={styles.iframe}
-        ></iframe>
-      </div>
-
-      <div className={styles.contentLayout}>
-        {/* COLUNA PRINCIPAL: DESCRIÇÃO */}
-        <main style={{ flex: '2', minWidth: '320px' }}>
-          <h2 className={styles.sectionTitle}>Sobre este Episódio</h2>
-          <p className={styles.descriptionText}>{episodio.descricao}</p>
-        </main>
-
-        {/* SIDEBAR: AUTOR E RELACIONADOS */}
-        <aside className={styles.aside}>
-          <div style={{ marginBottom: '40px' }}>
-            <h3 style={{ color: 'var(--color-accent)', marginBottom: '15px', fontSize: '18px' }}>CONVIDADO</h3>
-            <Link href={`/autores/${autor.slug}`} style={{ display: 'flex', alignItems: 'center', gap: '15px', textDecoration: 'none' }}>
-              <div style={{ position: 'relative', width: '60px', height: '60px', borderRadius: '50%', overflow: 'hidden', border: '2px solid var(--color-accent)' }}>
-                <Image src={autor.fotoUrl} alt={autor.nomeCompleto} fill style={{ objectFit: 'cover' }} />
-              </div>
-              <span style={{ fontWeight: 'bold', color: 'white' }}>{autor.nomeCompleto}</span>
-            </Link>
+      <div className={styles.upperLayout}>
+        {/* LADO ESQUERDO: PLAYER E INFOS */}
+        <div className={styles.playerSection}>
+          <div className={styles.playerWrapper}>
+            <iframe
+              src={embedUrl}
+              title={episodio.titulo}
+              allowFullScreen
+              className={styles.iframe}
+            ></iframe>
           </div>
 
-          <div>
-            <h3 style={{ color: 'var(--color-accent)', marginBottom: '15px', fontSize: '18px' }}>VER A SEGUIR</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {relacionados.map((rel) => (
-                <Link key={rel.id} href={`/videos/${rel.slug}`} style={{ display: 'flex', gap: '10px', textDecoration: 'none' }}>
-                  <div style={{ position: 'relative', width: '80px', height: '50px', borderRadius: '4px', overflow: 'hidden', flexShrink: 0 }}>
-                    <Image src={rel.imagemCapaUrl} alt={rel.titulo} fill style={{ objectFit: 'cover' }} />
+          <div className={styles.playerBar}>
+            <div className={styles.tagList}>
+              <span className={styles.badge}>#Literatura</span>
+              <span className={styles.badge}>#Cultura</span>
+              <span className={styles.badge}>#Tocantins</span>
+            </div>
+            <div className={styles.actionButtons}>
+              <a 
+                href="https://youtube.com/@CaliantrasTalkShow" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className={styles.iconBtnYouTube}
+              >
+                VER CANAL NO YOUTUBE
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* LADO DIREITO: SIDEBAR DINÂMICA */}
+        <aside className={styles.sidebarSection}>
+          <div className={styles.sidebarCard}>
+            <div className={styles.authorBox}>
+              <h3 className={styles.miniTag}>Convidado</h3>
+              <Link href={`/autores/${autorRelacionado.slug}`} className={styles.authorLink}>
+                <div className={styles.avatar}>
+                  <Image 
+                    src={autorRelacionado.fotoUrl} 
+                    alt={autorRelacionado.nomeCompleto} 
+                    fill 
+                    style={{ objectFit: 'cover' }} 
+                  />
+                </div>
+                <div>
+                    <span className={styles.authorName}>{autorRelacionado.nomeCompleto}</span>
+                    <span style={{ color: 'var(--color-accent)', fontSize: '10px', fontWeight: 'bold', display: 'block' }}>
+                        VER PERFIL →
+                    </span>
+                </div>
+              </Link>
+            </div>
+
+            <div className={styles.dividerHorizontal} />
+
+            <div className={styles.relatedBox}>
+              <h3 className={styles.miniTag}>Relacionados</h3>
+              <div className={styles.relatedGrid}>
+                {relacionados.map((rel, index) => (
+                  <div key={rel.id}>
+                    <Link href={`/videos/${rel.slug}`} className={styles.relatedItem}>
+                      <div className={styles.thumb}>
+                        <Image src={rel.imagemCapaUrl} alt={rel.titulo} fill style={{ objectFit: 'cover' }} />
+                      </div>
+                      <p className={styles.relatedTitle}>{rel.titulo}</p>
+                    </Link>
+                    {index < relacionados.length - 1 && <div className={styles.itemDivider} />}
                   </div>
-                  <p style={{ fontSize: '13px', color: '#ccc', fontWeight: 'bold', lineHeight: '1.2' }}>{rel.titulo}</p>
-                </Link>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </aside>
       </div>
+
+      {/* DESCRIÇÃO ABAIXO */}
+      <section className={styles.descriptionSection}>
+        <div className={styles.descriptionHeader}>
+          <h2 className={styles.modernSectionTitle}>Sobre o Episódio</h2>
+          <div className={styles.redLine} />
+        </div>
+        <p className={styles.descriptionText}>{episodio.descricao}</p>
+      </section>
     </div>
   );
 }

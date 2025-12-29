@@ -1,117 +1,239 @@
 /* app/videos/[slug]/EpisodioPage.module.css */
 
-/* 1. CONTAINER PRINCIPAL: Efeito de Modo Cinema */
 .mainContainer {
-    padding: 40px 20px;
-    /* Transição suave do escuro no topo para o fundo branco da página */
-    background: linear-gradient(to bottom, #1a1a1a 0%, #ffffff 600px);
-    min-height: 100vh;
-    color: var(--color-dark);
+    padding: 10px 40px 60px;
+    background-color: #ffffff;
+    max-width: 1450px;
+    margin: 0 auto;
 }
 
-/* Centralização do título no topo escuro */
+/* Título Moderno */
 .title {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 900;
-    text-align: center;
-    color: #ffffff; /* Branco para destacar sobre o fundo cinema */
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    margin-bottom: 40px;
-    line-height: 1.2;
+    color: #000;
+    margin-bottom: 25px;
+    letter-spacing: -1.5px;
+    text-align: left;
 }
 
-/* 2. PLAYER: Centralizado, com moldura suave e proporção elegante */
+/* Layout Paralelo */
+.upperLayout {
+    display: flex;
+    gap: 35px;
+    align-items: flex-start;
+    margin-bottom: 50px;
+}
+
+/* Seção do Player (Largo) */
+.playerSection {
+    flex: 2.8;
+}
+
 .playerWrapper {
     position: relative;
     width: 100%;
-    max-width: 850px; /* Impede o player de ficar gigante em telas largas */
-    padding-bottom: 48%; /* Um pouco mais "fino" que o 16:9 padrão */
+    padding-bottom: 56.25%; /* Proporção 16:9 */
     height: 0;
-    margin: 0 auto 60px; /* Centraliza horizontalmente e dá espaço abaixo */
     background-color: #000;
-    border-radius: 24px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 .iframe {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
     border: none;
 }
 
-/* 3. LAYOUT DE CONTEÚDO: Colunas alinhadas */
-.contentLayout {
+/* Barra de Info abaixo do Player */
+.playerBar {
     display: flex;
-    gap: 50px;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 5px;
 }
 
-/* Coluna da descrição */
-.mainColumn {
-    flex: 2;
-    min-width: 320px;
+.tagList {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
-.sectionTitle {
-    font-size: 24px;
+.badge {
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
     font-weight: 800;
-    border-bottom: 3px solid var(--color-accent);
-    padding-bottom: 12px;
-    margin-bottom: 20px;
-    color: var(--color-dark);
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.badge:hover {
+    background-color: var(--color-accent);
+    color: #fff;
+}
+
+/* Botão do YouTube (Cinza/Branco) */
+.iconBtnYouTube {
+    text-decoration: none;
+    background-color: #f5f5f5;
+    color: #444;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.iconBtnYouTube:hover {
+    background-color: #ffffff;
+    color: #000;
+    border-color: #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+}
+
+/* Sidebar Robusta */
+.sidebarSection {
+    flex: 1;
+    min-width: 340px;
+}
+
+.sidebarCard {
+    background-color: #000;
+    padding: 25px;
+    border-radius: 16px;
+    color: #fff;
+}
+
+.miniTag {
+    color: var(--color-accent);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+/* Bloco do Convidado */
+.authorBox {
+    margin-bottom: 5px;
+}
+
+.authorLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.avatar {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--color-accent);
+}
+
+.authorName {
+    font-weight: 800;
+    color: #fff;
+    font-size: 15px;
+}
+
+.dividerHorizontal {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+/* Vídeos Relacionados com Divisórias */
+.relatedGrid {
+    display: flex;
+    flex-direction: column;
+}
+
+.relatedItem {
+    display: flex;
+    gap: 12px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.relatedItem:hover {
+    opacity: 0.7;
+}
+
+.thumb {
+    position: relative;
+    width: 90px;
+    height: 50px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.relatedTitle {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.itemDivider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 15px 0;
+}
+
+/* Seção Sobre o Episódio */
+.descriptionSection {
+    max-width: 900px;
+    margin-top: 20px;
+}
+
+.modernSectionTitle {
+    font-size: 24px;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.redLine {
+    width: 50px;
+    height: 5px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+    margin-bottom: 25px;
 }
 
 .descriptionText {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.8;
-    color: #333;
+    color: #222;
 }
 
-/* 4. SIDEBAR: Efeito Glassmorphism (Vidro) */
-.aside {
-    flex: 1;
-    min-width: 300px;
-    padding: 30px;
-    border-radius: 24px;
-    /* Fundo escuro levemente transparente */
-    background: rgba(18, 18, 18, 0.92);
-    backdrop-filter: blur(12px); /* Desfoca o que está atrás */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    position: sticky; /* Acompanha o scroll */
-    top: 100px;
-}
-
-.sidebarSectionTitle {
-    color: var(--color-accent);
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    opacity: 0.9;
-}
-
-/* 5. RESPONSIVIDADE */
-@media (max-width: 992px) {
-    .contentLayout {
+/* Responsividade */
+@media (max-width: 1150px) {
+    .upperLayout {
         flex-direction: column;
     }
-
-    .aside {
-        position: static; /* Remove o sticky em telas pequenas */
+    .playerSection, .sidebarSection {
         width: 100%;
     }
-
-    .title {
-        font-size: 28px;
+    .mainContainer {
+        padding: 10px 20px 40px;
     }
 }

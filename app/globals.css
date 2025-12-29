@@ -118,3 +118,116 @@ ul { list-style: none; padding: 0; }
         display: none;
     }
 }
+
+/* Estilo para o Hero Banner Profissional */
+.home-hero-banner {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); /* Gradiente profundo */
+    padding: 100px 40px;
+    border-radius: 32px;
+    margin-bottom: 80px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.hero-tagline {
+    color: var(--color-accent); /* Amarelo/Destaque */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.hero-title {
+    font-size: clamp(32px, 5vw, 64px); /* Tamanho de fonte adaptável */
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+}
+
+.hero-title .highlight {
+    color: var(--color-accent);
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    color: #b0b0b0;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Botões Modernos */
+.btn-primary {
+    background-color: var(--color-accent);
+    color: #000;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(var(--color-accent-rgb), 0.3);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+/* Efeito de Luz no Fundo */
+.hero-visual-effect {
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.15) 0%, transparent 70%); /* Ajuste a cor para o seu accent */
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .home-hero-banner {
+        padding: 60px 20px;
+        border-radius: 0; /* Ocupa a tela toda em mobile */
+    }
+}
