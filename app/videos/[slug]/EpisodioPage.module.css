@@ -7,9 +7,10 @@
     margin: 0 auto;
 }
 
-/* Título Moderno */
+/* Título Adaptável */
 .title {
-    font-size: 32px;
+    /* clamp garante que a fonte diminua suavemente no mobile */
+    font-size: clamp(24px, 5vw, 32px); 
     font-weight: 900;
     color: #000;
     margin-bottom: 25px;
@@ -17,7 +18,7 @@
     text-align: left;
 }
 
-/* Layout Paralelo */
+/* Layout Dinâmico */
 .upperLayout {
     display: flex;
     gap: 35px;
@@ -25,7 +26,7 @@
     margin-bottom: 50px;
 }
 
-/* Seção do Player (Largo) */
+/* Seção do Player */
 .playerSection {
     flex: 2.8;
 }
@@ -50,7 +51,7 @@
     border: none;
 }
 
-/* Barra de Info abaixo do Player */
+/* Barra de Info Responsiva */
 .playerBar {
     display: flex;
     justify-content: space-between;
@@ -63,6 +64,7 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap; /* Permite que as tags quebrem linha no mobile */
 }
 
 .badge {
@@ -81,7 +83,7 @@
     color: #fff;
 }
 
-/* Botão do YouTube (Cinza/Branco) */
+/* Botão do YouTube Adaptável */
 .iconBtnYouTube {
     text-decoration: none;
     background-color: #f5f5f5;
@@ -104,7 +106,7 @@
     transform: translateY(-2px);
 }
 
-/* Sidebar Robusta */
+/* Sidebar */
 .sidebarSection {
     flex: 1;
     min-width: 340px;
@@ -159,7 +161,7 @@
     margin: 20px 0;
 }
 
-/* Vídeos Relacionados com Divisórias */
+/* Relacionados */
 .relatedGrid {
     display: flex;
     flex-direction: column;
@@ -198,7 +200,7 @@
     margin: 15px 0;
 }
 
-/* Seção Sobre o Episódio */
+/* Descrição */
 .descriptionSection {
     max-width: 900px;
     margin-top: 20px;
@@ -225,15 +227,39 @@
     color: #222;
 }
 
-/* Responsividade */
+/* === REGRAS DE RESPONSIVIDADE === */
+
 @media (max-width: 1150px) {
     .upperLayout {
-        flex-direction: column;
+        flex-direction: column; /* Empilha player e sidebar */
     }
+    
     .playerSection, .sidebarSection {
-        width: 100%;
+        width: 100%; /* Ocupa a largura total */
     }
+
+    .sidebarSection {
+        min-width: unset; /* Remove restrição de largura */
+    }
+
     .mainContainer {
-        padding: 10px 20px 40px;
+        padding: 10px 20px 40px; /* Reduz padding lateral */
+    }
+}
+
+@media (max-width: 768px) {
+    .playerBar {
+        flex-direction: column; /* Empilha tags e botão no mobile */
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .iconBtnYouTube {
+        width: 100%; /* Botão ocupa largura total no mobile */
+        text-align: center;
+    }
+    
+    .descriptionText {
+        font-size: 16px; /* Texto levemente menor para mobile */
     }
 }

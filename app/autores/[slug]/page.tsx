@@ -1,77 +1,41 @@
-// app/autores/[slug]/page.tsx
-
 import Image from 'next/image'; 
 import { notFound } from 'next/navigation';
-import { TODOS_AUTORES } from '@/lib/mockData'; // Centralizado
-import { Autor } from '../../components/utils/types'; 
+import { TODOS_AUTORES } from '@/lib/mockData'; 
+import styles from './AutorPage.module.css';
 
-// --------------------------------------------------
-// MOCK API: Função de busca do Autor por slug
-// --------------------------------------------------
-async function getAutorData(slug: string): Promise<Autor | null> {
-  await new Promise(resolve => setTimeout(resolve, 300));
+export default async function AutorPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const autor = TODOS_AUTORES.find(a => a.slug === slug);
-  return autor || null;
-}
-
-// --------------------------------------------------
-// ✅ CORREÇÃO OFICIAL PARA NEXT 15 (params é Promise)
-// --------------------------------------------------
-export default async function AutorPage(props: { params: Promise<{ slug: string }> }) {
-  
-  // ✅ AGORA SIM: resolve a Promise corretamente
-  const { slug } = await props.params;
-
-  const autor = await getAutorData(slug);
 
   if (!autor) return notFound();
 
   return (
-    <div style={{ padding: '40px 0', color: 'var(--color-dark)' }}>
-      
-      <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap' }}>
+    <div className={styles.mainContainer}>
+      <div className={styles.headerSection}>
         
-        {/* FOTO */}
-        <div style={{ flex: '0 0 350px' }}>
-          <div
-            style={{
-              position: 'relative',
-              width: '100%',
-              height: '400px',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              boxShadow: '0 8px 20px rgba(0,0,0,0.15)',
-            }}
-          >
-            <Image
-              src={autor.fotoUrl}
-              alt={`Foto de ${autor.nomeCompleto}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 350px"
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
+        {/* FOTO RESPONSIVA */}
+        <div className={styles.avatarWrapper}>
+          <Image
+            src={autor.fotoUrl}
+            alt={`Foto de ${autor.nomeCompleto}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 350px"
+            style={{ objectFit: 'cover' }}
+            priority
+          />
         </div>
 
         {/* DADOS */}
-        <div style={{ flex: '1', minWidth: '300px' }}>
-          <h1 style={{ fontSize: '48px', fontWeight: '900' }}>
-            {autor.nomeCompleto}
-          </h1>
-
-          <h2 style={{ fontSize: '24px', color: 'var(--color-c)', marginBottom: '30px' }}>
-            Convidado Principal do Caliantras
+        <div className={styles.infoBox}>
+          <h1 className={styles.nome}>{autor.nomeCompleto}</h1>
+          <h2 style={{ fontSize: '20px', color: 'var(--color-c)', marginBottom: '25px' }}>
+             Convidado Principal do Caliantras
           </h2>
 
-          <div style={{ fontSize: '18px', lineHeight: '1.7', marginBottom: '40px' }}>
-            <p>
-              {autor.bio} 
-            </p>
+          <div className={styles.bio}>
+            <p>{autor.bio || autor.bio}</p>
           </div>
-
-        
         </div>
-
       </div>
     </div>
   );

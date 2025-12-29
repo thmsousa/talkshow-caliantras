@@ -1,6 +1,4 @@
-// app/_components/layout/NavbarClient.tsx
 'use client'; 
-
 import Link from 'next/link';
 
 const navItems = [
@@ -13,13 +11,17 @@ const navItems = [
 export default function NavbarClient() {
     return (
         <nav>
-            <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
+            <ul style={{ 
+                display: 'flex', 
+                flexWrap: 'wrap', // Permite que os itens passem para a linha de baixo
+                justifyContent: 'center',
+                listStyle: 'none', 
+                margin: 0, 
+                padding: 0 
+            }}>
                 {navItems.map((item) => (
-                    <li key={item.name} style={{ marginLeft: '50px' }}>
-                        <Link 
-                            href={item.href} 
-                            style={{ color: 'white', fontWeight: 'bold' }}
-                        >
+                    <li key={item.name} style={{ margin: '5px 15px' }}> 
+                        <Link href={item.href} style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>
                             {item.name}
                         </Link>
                     </li>

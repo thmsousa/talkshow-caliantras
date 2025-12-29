@@ -4,14 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search } from 'lucide-react'; 
-import { TODOS_EPISODIOS } from '@/lib/mockData'; // Importa dados centralizados
+import { TODOS_EPISODIOS } from '@/lib/mockData'; 
 import { Episodio } from '../components/utils/types';
 
 export default function VideosIndexPage() {
     const [busca, setBusca] = useState('');
     const [videosFiltrados, setVideosFiltrados] = useState<Episodio[]>(TODOS_EPISODIOS);
 
-    // Efeito para filtrar a lista de vídeos conforme a pesquisa
     useEffect(() => {
         const termoBusca = busca.toLowerCase();
         const resultados = TODOS_EPISODIOS.filter(episodio => 
@@ -21,11 +20,9 @@ export default function VideosIndexPage() {
         setVideosFiltrados(resultados);
     }, [busca]);
 
-    // Lógica para verificar se o vídeo foi lançado nos últimos 7 dias
     const isNovo = (dateString: string) => {
         const dataLancamento = new Date(dateString);
         const hoje = new Date();
-        // Constante de 7 dias convertida para milissegundos
         const seteDiasEmMs = 7 * 24 * 60 * 60 * 1000;
         return (hoje.getTime() - dataLancamento.getTime()) < seteDiasEmMs;
     };
@@ -38,13 +35,52 @@ export default function VideosIndexPage() {
     };
 
     return (
-        <div style={{ padding: '20px 0', color: 'var(--color-dark)' }}>
-            <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-                <h1 style={{ fontSize: '42px', fontWeight: '900', marginBottom: '10px' }}>Catálogo de Vídeos</h1>
+        <div className="page-container">
+            {/* ESTILOS DE RESPONSIVIDADE */}
+            <style jsx>{`
+                .page-container {
+                    padding: 20px 15px; /* Reduzido para mobile */
+                    color: var(--color-dark);
+                    max-width: 1400px;
+                    margin: 0 auto;
+                }
+                .header-section {
+                    text-align: center;
+                    margin-bottom: 40px;
+                }
+                .main-title {
+                    font-size: clamp(28px, 6vw, 42px); /* Ajusta fonte conforme a tela */
+                    font-weight: 900;
+                    margin-bottom: 10px;
+                }
+                .search-wrapper {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    position: relative;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                }
+                .video-grid {
+                    display: grid;
+                    /* minmax ajustado para 280px para não quebrar em telas pequenas */
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                    gap: 25px;
+                    padding: 10px 0;
+                }
+
+                @media (max-width: 768px) {
+                    .page-container { padding: 10px 10px; }
+                    .video-grid { 
+                        grid-template-columns: 1fr; /* Força uma coluna em celulares */
+                        gap: 20px;
+                    }
+                }
+            `}</style>
+
+            <div className="header-section">
+                <h1 className="main-title">Catálogo de Vídeos</h1>
                 <div style={{ width: '60px', height: '4px', backgroundColor: 'var(--color-accent)', margin: '0 auto 30px' }} />
 
-                {/* BARRA DE BUSCA POLIDA */}
-                <div style={{ maxWidth: '600px', margin: '0 auto', position: 'relative', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                <div className="search-wrapper">
                     <input 
                         type="text" 
                         placeholder="Pesquisar episódios..." 
@@ -68,22 +104,28 @@ export default function VideosIndexPage() {
                 </div>
             </div>
             
-            {/* GRID DE CARDS COM LÓGICA DE SELO DE 7 DIAS */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '30px', padding: '10px' }}>
+            <div className="video-grid">
                 {videosFiltrados.map(episodio => (
                     <div key={episodio.id} 
                         style={{ 
                             backgroundColor: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 15px 35px rgba(0,0,0,0.08)',
                             transition: 'transform 0.4s ease', cursor: 'pointer', border: '1px solid #f0f0f0'
                         }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-10px)'}
+                        className="video-card"
+                        onMouseOver={(e) => {
+                            if (window.innerWidth > 768) e.currentTarget.style.transform = 'translateY(-10px)';
+                        }}
                         onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                     >
                         <Link href={`/videos/${episodio.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <div style={{ position: 'relative', width: '100%', height: '200px' }}>
-                                <Image src={episodio.imagemCapaUrl} alt={episodio.titulo} fill style={{ objectFit: 'cover', objectPosition: '50% 30%' }} />
+                                <Image 
+                                    src={episodio.imagemCapaUrl} 
+                                    alt={episodio.titulo} 
+                                    fill 
+                                    style={{ objectFit: 'cover', objectPosition: '50% 30%' }} 
+                                />
                                 
-                                {/* SELO APARECE APENAS SE TIVER MENOS DE 7 DIAS */}
                                 {isNovo(episodio.dataLancamento) && (
                                     <div style={{ 
                                         position: 'absolute', top: '15px', left: '15px', backgroundColor: 'var(--color-accent)',
@@ -93,9 +135,9 @@ export default function VideosIndexPage() {
                                     </div>
                                 )}
                             </div>
-                            <div style={{ padding: '25px' }}>
+                            <div style={{ padding: '20px' }}> {/* Padding interno ajustado */}
                                 <p style={{ fontSize: '12px', color: '#888', fontWeight: '600', marginBottom: '8px' }}>{formatDate(episodio.dataLancamento)}</p>
-                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '12px' }}>{episodio.titulo}</h3>
+                                <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '12px' }}>{episodio.titulo}</h3>
                                 <p style={{ fontSize: '14px', color: '#666', lineHeight: '1.6', WebkitLineClamp: 2, display: '-webkit-box', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                     {episodio.descricao}
                                 </p>
@@ -105,7 +147,6 @@ export default function VideosIndexPage() {
                 ))}
             </div>
 
-            {/* FEEDBACK SE NÃO HOUVER RESULTADOS */}
             {videosFiltrados.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '50px' }}>
                     <p style={{ color: '#999' }}>Nenhum vídeo encontrado para a sua pesquisa.</p>

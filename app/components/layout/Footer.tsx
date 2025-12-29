@@ -1,30 +1,68 @@
-// app/_components/layout/Footer.tsx
-'use client'; // <-- ESSENCIAL PARA O new Date().getFullYear()
+'use client';
 
 import Link from 'next/link';
 
 export default function Footer() {
   return (
-    // Fundo Preto/Cinza Escuro (Cor Secundária)
     <footer style={{ 
         backgroundColor: 'var(--color-dark)', 
         color: 'white', 
         marginTop: '30px', 
-        padding: '20px 0', 
-        borderTop: '4px solid var(--color-primary)' // Linha Caliandra
+        padding: '30px 0', 
+        borderTop: '4px solid var(--color-primary)' 
       }}>
-      <div className="container" style={{ margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ textAlign: 'left' }}>
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--color-accent)' }}>CALIANTRAS</p> 
-          <p style={{ fontSize: '12px', color: 'gray' }}>© {new Date().getFullYear()} Todos os direitos reservados.</p>
+      <div className="container footer-container">
+        <div className="footer-info">
+          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--color-accent)', margin: 0 }}>CALIANTRAS</p> 
+          <p style={{ fontSize: '12px', color: 'gray', marginTop: '5px' }}>
+            © {new Date().getFullYear()} Todos os direitos reservados.
+          </p>
         </div>
-        <nav>
-          <ul style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
-            <li><Link href="/sobre" style={{ color: 'white', marginLeft: '15px' }}>Sobre</Link></li>
-            <li><Link href="https://www.instagram.com/calintras/" style={{ color: 'white', marginLeft: '15px' }}>Contato</Link></li>
+        
+        <nav className="footer-nav">
+          <ul>
+            <li><Link href="/sobre">Sobre</Link></li>
+            <li><Link href="https://www.instagram.com/calintras/">Contato</Link></li>
           </ul>
         </nav>
       </div>
+
+      <style jsx>{`
+        .footer-container {
+          display: flex;
+          flex-direction: column; /* Mobile first: empilha */
+          align-items: center;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .footer-nav ul {
+          display: flex;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          gap: 20px;
+        }
+
+        .footer-nav :global(a) {
+          color: white;
+          text-decoration: none;
+          font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+          .footer-container {
+            flex-direction: row; /* Desktop: lado a lado */
+            justify-content: space-between;
+            text-align: left;
+            align-items: center;
+          }
+          
+          .footer-info {
+            text-align: left;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

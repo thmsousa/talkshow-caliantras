@@ -42,7 +42,7 @@ export const TODOS_EPISODIOS: Episodio[] = [
         slug: 'encontro-ilicito',
         dataLancamento: '2025-11-28T12:00:00',
         urlVideo: 'NpGOg2fvgz4',
-        descricao: 'Um pequeno Vlog do encontro "Espirito Ilícito", realizado no dia 10 de outubro',
+        descricao: 'Um pequeno Vlog do encontro "Espirito Ilícito", realizado no dia 10 de outubro.',
         imagemCapaUrl: '/images/mock/cover_vlog_encontro.png',
         autorId: 'a1'
     },
