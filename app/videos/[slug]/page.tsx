@@ -58,16 +58,7 @@ export default async function EpisodioPage({ params }: { params: Promise<{ slug:
               <span className={styles.badge}>#Cultura</span>
               <span className={styles.badge}>#Tocantins</span>
             </div>
-            <div className={styles.actionButtons}>
-              <a 
-                href="https://youtube.com/@CaliantrasTalkShow" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className={styles.iconBtnYouTube}
-              >
-                VER CANAL NO YOUTUBE
-              </a>
-            </div>
+          
           </div>
         </div>
 

@@ -1,6 +1,24 @@
 /* app/globals.css */
 
+
 /* app/globals.css */
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden; /* Trava a rolagem horizontal */
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Garante que o body ocupe a altura toda */
+}
+
+/* Isso remove fisicamente qualquer elemento que tente "vazar" para a direita */
+#__next, main {
+  overflow: hidden;
+  width: 100%;
+}
+
 
 /* 1. Mantenha suas importações de fontes no topo */
 @font-face {
