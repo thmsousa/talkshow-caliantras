@@ -18,16 +18,17 @@ export default function Header() {
     }}>
       <div className="container header-flex-container">
         
+        {/* LOGO: "C" em Amoresa e "aliandras" em Perandory */}
         <Link href="/" style={{ 
             textDecoration: 'none', 
             display: 'flex', 
             alignItems: 'center',
-            paddingTop: '10px',   // Adicione ou aumente este valor para empurrar o título para baixo
-            height: '100%',        // Garante que o link ocupe a altura da barra
-            padding: '4px 0' // Padding reduzido no logo
+            paddingTop: "12px",
+            height: '100%',
+            padding: '8px 0'
         }}>
           <span className="font-amoresa" style={{ 
-            fontSize: 'clamp(24px, 3.5vw, 30px)', // Escala de logo menor
+            fontSize: 'clamp(24px, 3.5vw, 30px)',
             lineHeight: '0.8',
             color: 'var(--color-accent)',
             display: 'inline-block'
@@ -35,7 +36,7 @@ export default function Header() {
             C
           </span>
           <span className="font-perandory" style={{ 
-            fontSize: 'clamp(18px, 2.5vw, 22px)', // Texto "aliandras" mais discreto
+            fontSize: 'clamp(18px, 2.5vw, 22px)',
             color: '#ffffff', 
             marginLeft: '-3px', 
             textTransform: 'lowercase'
@@ -44,25 +45,23 @@ export default function Header() {
           </span>
         </Link>
 
+        {/* NAVEGAÇÃO CLIENT SIDE COM LOGICA DE MENU OCULTO */}
         <NavbarClient /> 
 
       </div>
 
       <style jsx>{`
         .header-flex-container {
-          padding: 5px 20px; /* Padding vertical total reduzido */
+          padding: 5px 20px;
           display: flex;
-          flex-direction: column;
-          gap: 5px; /* Espaço entre logo e menu reduzido no mobile */
+          flex-direction: row; 
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
         }
 
         @media (min-width: 768px) {
           .header-flex-container {
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 15px 40px; /* Altura final otimizada para desktop */
+            padding: 10px 40px;
           }
         }
       `}</style>
