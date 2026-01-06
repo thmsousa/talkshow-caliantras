@@ -23,7 +23,8 @@ export default function Header() {
             textDecoration: 'none', 
             display: 'flex', 
             alignItems: 'center',
-            paddingTop: "12px",
+            transform: 'translateY(4px)', 
+            paddingTop: "10px",
             height: '100%',
             padding: '8px 0'
         }}>
