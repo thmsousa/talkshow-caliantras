@@ -65,7 +65,7 @@ export default function SobrePage() {
                     color: '#444',
                     textAlign: 'justify'
                 }}>
-                    O Caliantras nasceu da urgência de dar palco às vozes que constroem a identidade cultural brasileira. 
+                    O Caliandras nasceu da urgência de dar palco às vozes que constroem a identidade cultural brasileira. 
                     Exploramos as profundezas da literatura regional e nacional, conectando autores consagrados e novos talentos 
                     a um público ávido por conteúdo inteligente e sensível.
                 </p>
@@ -154,7 +154,7 @@ export default function SobrePage() {
                     boxShadow: '0 15px 35px rgba(177, 35, 35, 0.25)'
                 }}
             >
-                Explore a Galeria →
+                Explore a Galeria 
             </Link>
         </div>
         

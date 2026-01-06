@@ -20,7 +20,7 @@ const formatDate = (dateString: string) => {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const episodio = TODOS_EPISODIOS.find((ep) => ep.slug === slug);
-  return { title: `${episodio?.titulo || 'Vídeo'} | Caliantras` };
+  return { title: `${episodio?.titulo || 'Vídeo'} | Caliandras` };
 }
 
 export default async function EpisodioPage({ params }: { params: Promise<{ slug: string }> }) {

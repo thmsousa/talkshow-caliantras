@@ -21,7 +21,7 @@ export const TODOS_AUTORES: Autor[] = [
         nomeCompleto: 'Nayra',
         fotoUrl: '/images/mock/nayra.jpg', 
         slug: 'nayra',
-        bio: "Apresentadora e produtora do Caliantras."
+        bio: "Apresentadora e produtora do Caliandras."
     }
 ];
 
@@ -110,3 +110,36 @@ export const TODOS_PRODUTOS: Produto[] = [
 ];
     
 
+export const EVENTOS_CALINDRAS = [
+    { 
+        id: 1, 
+        titulo: "Lançamento Espiríto Ilícito", 
+        data: "10 de Outubro", 
+        imagem: "/images/mock/eve1.jpeg" 
+    },
+    { 
+        id: 2, 
+        titulo: "Aula de Leitura Regional", 
+        data: "18 de Novembro", 
+        imagem: "/images/mock/eve2.jpeg" 
+    },
+    { 
+        id: 3, titulo: "VIII Feira de Cultura ", 
+        data: "24 de Novembro", 
+        imagem: "/images/mock/eve3.jpeg" 
+    },
+    { 
+        id: 4, 
+        titulo: "Aula de Língua Portuguesa", 
+        data: "28 de Novembro", 
+        imagem: "/images/mock/eve4.jpeg" 
+    },
+    { 
+        id: 5, 
+        titulo: "Intervenções Poéticas", 
+        data: "05 de Dezembro", 
+        imagem: "/images/mock/eve5.jpeg" 
+    },
+   
+    
+];

@@ -2,6 +2,7 @@
 import Link from 'next/link';
 
 const navItems = [
+    { name: 'Eventos', href: '/eventos' },
     { name: 'Vídeos', href: '/videos' },
     { name: 'Produtos', href: '/produtos' },
     { name: 'Autores', href: '/autores' },
@@ -13,7 +14,7 @@ export default function NavbarClient() {
         <nav>
             <ul style={{ 
                 display: 'flex', 
-                flexWrap: 'wrap', // Permite que os itens passem para a linha de baixo
+                flexWrap: 'wrap', // 
                 justifyContent: 'center',
                 listStyle: 'none', 
                 margin: 0, 
@@ -21,7 +22,12 @@ export default function NavbarClient() {
             }}>
                 {navItems.map((item) => (
                     <li key={item.name} style={{ margin: '5px 15px' }}> 
-                        <Link href={item.href} style={{ color: 'white', fontWeight: 'bold', fontSize: '14px' }}>
+                        <Link href={item.href} style={{ 
+                            color: 'white', 
+                            fontWeight: 'bold',
+                            fontSize: '17px', 
+                            transition: 'opacity 0.2s',
+                            letterSpacing: '0.8px' }}>
                             {item.name}
                         </Link>
                     </li>

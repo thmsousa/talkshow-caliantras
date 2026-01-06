@@ -29,7 +29,7 @@ export default async function AutorPage({ params }: { params: Promise<{ slug: st
         <div className={styles.infoBox}>
           <h1 className={styles.nome}>{autor.nomeCompleto}</h1>
           <h2 style={{ fontSize: '20px', color: 'var(--color-c)', marginBottom: '25px' }}>
-             Convidado Principal do Caliantras
+             Convidado Principal do Caliandras
           </h2>
 
           <div className={styles.bio}>

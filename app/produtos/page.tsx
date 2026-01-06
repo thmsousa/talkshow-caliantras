@@ -3,20 +3,27 @@
 import Image from 'next/image';
 import { TODOS_PRODUTOS } from '@/lib/mockData';
 import styles from './Produtos.module.css';
+import ChatBot from '../components/ChatBot';
 
 export default function ProdutosPage() {
+    const handleBuyClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        // Dispara a função global definida no ChatBot
+        if (typeof window !== 'undefined' && (window as any).openCaliantrasChat) {
+            (window as any).openCaliantrasChat();
+        }
+    };
+
     return (
         <main className={styles.container}>
-            {/* Título Editorial Moderno */}
             <header className={styles.header}>
-                <h1 className={styles.modernTitle}>Loja Caliantras</h1>
+                <h1 className={styles.modernTitle}>Loja Caliandras</h1>
                 <div className={styles.redLine} />
                 <p className={styles.subtitle}>
                     Adquira as obras literárias e materiais exclusivos do nosso universo cultural.
                 </p>
             </header>
 
-            {/* Grid de Produtos */}
             <div className={styles.productGrid}>
                 {TODOS_PRODUTOS.map((produto) => (
                     <div key={produto.id} className={styles.productCard}>
@@ -28,7 +35,7 @@ export default function ProdutosPage() {
                                 fill
                                 priority 
                                 sizes="(max-width: 768px) 100vw, 33vw"
-                                className={styles.productImage} // Certifique-se de que o CSS acima aponte para cá 
+                                className={styles.productImage} 
                             />
                         </div>
                         
@@ -38,18 +45,19 @@ export default function ProdutosPage() {
                             
                             <div className={styles.footerRow}>
                                 <span className={styles.price}>{produto.preco}</span>
-                                <a 
-                                    href={produto.linkCompra} 
-                                    target="_blank" 
+                                <button 
+                                    onClick={handleBuyClick}
                                     className={styles.buyButton}
                                 >
                                     COMPRAR
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
+            <ChatBot />
         </main>
     );
 }

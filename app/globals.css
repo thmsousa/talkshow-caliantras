@@ -1,18 +1,62 @@
 /* app/globals.css */
 
+/* app/globals.css */
+
+/* 1. Mantenha suas importações de fontes no topo */
+@font-face {
+  font-family: 'AmoresaAged';
+  src: url('/fonts/amoresa-aged.otf') format('opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Perandory';
+  src: url('/fonts/Perandory-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 2. TIPOGRAFIA: Removi o !important para não quebrar seus botões */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, a, li, span, button {
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* 3. CLASSES DA LOGO: Com !important para elas funcionarem */
+.font-amoresa {
+  font-family: 'AmoresaAged', serif !important;
+}
+
+.font-perandory {
+  font-family: 'Perandory', serif !important;
+}
+
+/* MANTENHA TODO O RESTO DO SEU CSS IGUAL ABAIXO 
+   (Animações do livro, Hero Banner, Efeito de luz, Botões, etc.) */
+
 :root {
   --color-c: #D21B48;    /* Caliandra Principal (Blocos/Rosa) */
   --color-dark: #121212; /* Preto Suave (Header/Footer/Texto) */
   --color-accent: #b12323;  /*  (Destaques) */
   --color-text: #121212;    /* NOVO: Texto Principal será Preto */
+  --font-serif: "Times New Roman", Times, serif;
 }
+
 
 /* Aplicando o fundo Branco e texto Preto */
 body {
   background-color: #ffffff; /* FUNDO AGORA É BRANCO */
   color: var(--color-text);  /* Texto do corpo é Preto */
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Times New Roman", Times, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Times New Roman", Times, serif;
 }
 
 .container {
@@ -31,7 +75,16 @@ a {
 a:hover { opacity: 0.8; }
 ul { list-style: none; padding: 0; }
 
-/* app/globals.css (Adicionar no final do arquivo) */
+/* 4. ANIMAÇÕES DO LIVRO E CHAT */
+@keyframes chatPop {
+    0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-active {
+    animation: chatPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 
 /* 1. Definição da Perspectiva para simular o 3D */
 @keyframes book-open-right {
@@ -92,6 +145,12 @@ ul { list-style: none; padding: 0; }
     .episodio-container-inner {
         flex-direction: column;
     }
+}
+
+@media (max-width: 768px) {
+  .nav-button-varal {
+    display: none !important;
+  }
 }
 
 

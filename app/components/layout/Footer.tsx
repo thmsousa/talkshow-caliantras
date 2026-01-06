@@ -13,7 +13,7 @@ export default function Footer() {
       }}>
       <div className="container footer-container">
         <div className="footer-info">
-          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--color-accent)', margin: 0 }}>CALIANTRAS</p> 
+          <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--color-accent)', margin: 0 }}>CALIANDRAS</p> 
           <p style={{ fontSize: '12px', color: 'gray', marginTop: '5px' }}>
             © {new Date().getFullYear()} Todos os direitos reservados.
           </p>
@@ -22,7 +22,7 @@ export default function Footer() {
         <nav className="footer-nav">
           <ul>
             <li><Link href="/sobre">Sobre</Link></li>
-            <li><Link href="https://www.instagram.com/calintras/">Contato</Link></li>
+            <li><Link href="https://www.instagram.com/caliandrasshow/">Contato</Link></li>
           </ul>
         </nav>
       </div>
