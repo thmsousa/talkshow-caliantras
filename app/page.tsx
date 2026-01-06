@@ -23,7 +23,7 @@ export default function HomePage() {
 
     const scroll = (direction: 'left' | 'right') => {
         if (carrosselRef.current) {
-            const scrollAmount = 340; 
+            const scrollAmount = carrosselRef.current.clientWidth * 0.8; 
             const { scrollLeft } = carrosselRef.current;
             const scrollTo = direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
             carrosselRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
@@ -47,13 +47,13 @@ export default function HomePage() {
     if (showSplash) return <SplashScreen onComplete={() => { setShowSplash(false); localStorage.setItem('hasSeenSplash', 'true'); }} />;
 
     return (
-        <main style={{ maxWidth: '1250px', margin: '0 auto', padding: '0 20px' }}>
+        <main style={{ maxWidth: '1250px', margin: '0 auto', padding: '0 15px' }}>
             
-            {/* --- SEÇÃO: EVENTOS (Varal Realista) --- */}
-            <section style={{ padding: '30px 0 40px', position: 'relative' }}>
+            {/* --- SEÇÃO: EVENTOS (Varal Realista Responsivo) --- */}
+            <section style={{ padding: '30px 0 40px', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ marginBottom: '30px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        <h2 style={{ fontSize: '36px', fontWeight: '800', color: '#1a1a1a', margin: 0, letterSpacing: '-1px' }}>
+                        <h2 style={{ fontSize: 'clamp(24px, 5vw, 36px)', fontWeight: '800', color: '#1a1a1a', margin: 0, letterSpacing: '-1px' }}>
                             Eventos
                         </h2>
                         <div style={{ flex: 1, height: '1px', backgroundColor: '#e0e0e0', borderRadius: '1px' }} />
@@ -61,28 +61,29 @@ export default function HomePage() {
                 </div>
 
                 <div style={{ position: 'relative' }}>
-                    {/* CABO DO VARAL: Linha fina que conecta os cards */}
+                    {/* CABO DO VARAL */}
                     <div style={{
                         position: 'absolute',
-                        top: '25px', // Alinhado com a posição dos grampos
-                        left: '0',
-                        right: '0',
+                        top: '25px', 
+                        left: '-100px',
+                        right: '-100px',
                         height: '1px',
                         backgroundColor: '#ccc',
                         zIndex: 5,
                         pointerEvents: 'none'
                     }} />
 
-                    <button onClick={() => scroll('left')} style={navButtonStyle}>‹</button>
-                    <button onClick={() => scroll('right')} style={{...navButtonStyle, right: '-25px', left: 'auto'}}>›</button>
+                    {/* Botões ocultos via classe nav-button-varal no mobile através do globals.css */}
+                    <button onClick={() => scroll('left')} className="nav-button-varal" style={navButtonStyle}>‹</button>
+                    <button onClick={() => scroll('right')} className="nav-button-varal" style={{...navButtonStyle, right: '-25px', left: 'auto'}}>›</button>
 
-                    <div ref={carrosselRef} style={carrosselStyle}>
+                    <div ref={carrosselRef} className="carrossel-container" style={carrosselStyle}>
                         {EVENTOS_CALINDRAS.map((evento, index) => (
                             <div key={evento.id} style={{
                                 ...cardBaseStyle,
                                 transform: index % 2 === 0 ? 'rotate(-1.5deg)' : 'rotate(1.5deg)',
-                                scrollSnapAlign: 'start',
-                                transformOrigin: 'top center', // Faz o balanço rotacionar a partir do topo
+                                scrollSnapAlign: 'center',
+                                transformOrigin: 'top center',
                             }}
                             onMouseOver={(e) => {
                                 e.currentTarget.style.transform = 'rotate(0deg) translateY(-8px)';
@@ -97,7 +98,6 @@ export default function HomePage() {
                                 if (img) img.style.transform = 'scale(1)';
                             }}
                             >
-                                {/* PIN/GRAMPO: Fica por cima do cabo */}
                                 <div style={pinStyle} />
                                 
                                 <div style={{ 
@@ -117,7 +117,7 @@ export default function HomePage() {
                                             padding: '20px',
                                             transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)' 
                                         }} 
-                                        sizes="310px"
+                                        sizes="(max-width: 768px) 280px, 310px"
                                     />
                                 </div>
 
@@ -131,10 +131,10 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* --- SEÇÃO DE VÍDEOS --- */}
+            {/* --- SEÇÃO DE VÍDEOS REPROJETADA PARA RESPONSIVIDADE --- */}
             <section style={{ marginTop: '20px', marginBottom: '80px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '35px' }}>
-                    <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#1a1a1a', margin: 0 }}>
+                    <h2 style={{ fontSize: 'clamp(22px, 4vw, 32px)', fontWeight: '800', color: '#1a1a1a', margin: 0 }}>
                         Últimos Vídeos
                     </h2>
                     <div style={{ flex: 1, height: '1px', backgroundColor: '#e0e0e0' }} />
@@ -154,7 +154,7 @@ export default function HomePage() {
                                  }}
                             >
                                 <div style={{ position: 'relative', width: '100%', height: '240px', overflow: 'hidden' }}>
-                                    <Image src={episodio.imagemCapaUrl} alt={episodio.titulo} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 360px" />
+                                    <Image src={episodio.imagemCapaUrl} alt={episodio.titulo} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 400px" />
                                 </div>
                                 <div style={{ padding: '25px' }}>
                                     <p style={{ fontSize: '11px', color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1px' }}>
@@ -172,6 +172,7 @@ export default function HomePage() {
     );
 }
 
+/* --- ESTILOS ADAPTADOS --- */
 const navButtonStyle: React.CSSProperties = {
     position: 'absolute', left: '-25px', top: '45%', transform: 'translateY(-50%)',
     zIndex: 30, background: '#fff', border: 'none', borderRadius: '50%',
@@ -181,18 +182,29 @@ const navButtonStyle: React.CSSProperties = {
 };
 
 const carrosselStyle: React.CSSProperties = {
-    display: 'flex', gap: '30px', overflowX: 'auto', padding: '10px 10px 30px',
-    scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'smooth',
+    display: 'flex', 
+    gap: '20px', 
+    overflowX: 'auto', 
+    padding: '15px 10px 30px',
+    scrollbarWidth: 'none', 
+    msOverflowStyle: 'none', 
+    scrollBehavior: 'smooth',
     scrollSnapType: 'x mandatory',
-    zIndex: 10
+    zIndex: 10,
+    WebkitOverflowScrolling: 'touch'
 };
 
 const cardBaseStyle: React.CSSProperties = {
-    flex: '0 0 310px', height: '490px', position: 'relative',
-    backgroundColor: '#fff', padding: '0', 
+    flex: '0 0 min(310px, 85vw)', // Garante que o card nunca seja maior que a tela mobile
+    height: '490px', 
+    position: 'relative',
+    backgroundColor: '#fff', 
+    padding: '0', 
     boxShadow: '0 10px 30px rgba(0,0,0,0.08)', 
     transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-    cursor: 'pointer', overflow: 'hidden', borderRadius: '4px',
+    cursor: 'pointer', 
+    overflow: 'hidden', 
+    borderRadius: '4px',
     border: '1px solid #f0f0f0',
     zIndex: 10
 };
@@ -203,7 +215,7 @@ const pinStyle: React.CSSProperties = {
     left: '50%', 
     transform: 'translateX(-50%)',
     width: '20px', 
-    height: '25px', // Grampo mais vertical para parecer que "prende" no cabo
+    height: '25px', 
     backgroundColor: '#333', 
     borderRadius: '2px', 
     zIndex: 15,
@@ -220,7 +232,33 @@ const eventTitleStyle: React.CSSProperties = {
     display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden'
 };
 
-const gridStyle: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '35px' };
-const videoCardStyle: React.CSSProperties = { backgroundColor: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', transition: 'all 0.4s ease' };
-const videoTitleStyle: React.CSSProperties = { fontSize: '22px', fontWeight: '800', color: '#1a1a1a', marginBottom: '12px' };
-const videoDescStyle: React.CSSProperties = { fontSize: '14px', color: '#666', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' };
+const gridStyle: React.CSSProperties = { 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(auto-fill, minmax(min(350px, 100%), 1fr))', 
+    gap: '30px' 
+};
+
+const videoCardStyle: React.CSSProperties = { 
+    backgroundColor: '#fff', 
+    borderRadius: '16px', 
+    overflow: 'hidden', 
+    boxShadow: '0 10px 30px rgba(0,0,0,0.05)', 
+    transition: 'transform 0.4s ease' 
+};
+
+const videoTitleStyle: React.CSSProperties = { 
+    fontSize: '22px', 
+    fontWeight: '800', 
+    color: '#1a1a1a', 
+    marginBottom: '12px' 
+};
+
+const videoDescStyle: React.CSSProperties = { 
+    fontSize: '14px', 
+    color: '#666', 
+    lineHeight: '1.6', 
+    display: '-webkit-box', 
+    WebkitLineClamp: 2, 
+    WebkitBoxOrient: 'vertical', 
+    overflow: 'hidden' 
+};

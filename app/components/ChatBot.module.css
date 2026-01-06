@@ -3,123 +3,135 @@
     bottom: 30px;
     right: 30px;
     z-index: 10000;
-    width: 350px;
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    width: 360px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px); /* Efeito de vidro moderno */
+    border-radius: 28px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: slideUp 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .header {
-    background: #000000;
-    padding: 20px;
+    background: #111;
+    padding: 24px;
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 12px;
-    border-bottom: 3px solid var(--color-accent);
+    gap: 15px;
 }
 
 .avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px; /* Estilo 'Squircle' moderno */
     background: var(--color-accent);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(177, 35, 35, 0.3);
+    font-size: 22px;
+    font-weight: 900;
+    box-shadow: 0 8px 15px rgba(177, 35, 35, 0.3);
 }
 
 .statusInfo h4 {
     margin: 0;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
+
+
 
 .closeBtn {
-    background: none;
+    background: rgba(255,255,255,0.1);
     border: none;
     color: #fff;
-    font-size: 22px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     cursor: pointer;
     margin-left: auto;
-    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
 }
 
+.closeBtn:hover { background: var(--color-accent); }
+
 .chatBody {
-    padding: 25px;
-    background: #ffffff;
+    padding: 30px;
 }
 
 .bubble {
     background: #f8f9fa;
-    padding: 20px;
-    border-radius: 20px 20px 20px 20px;
-    font-size: 14px;
+    padding: 22px;
+    border-radius: 18px;
+    font-size: 15px;
     line-height: 1.6;
-    color: #1a1a1a;
-    border: 1px solid #dbc1c1;
-    margin-bottom: 30px;
-    font-family: var(--font-serif);
+    color: #222;
+    border: 1px solid #eee;
+    margin-bottom: 25px;
 }
 
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .actionButton {
     width: 100%;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 12px;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     text-align: center;
     text-decoration: none;
-    transition: all 0.3s ease;
-    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .whatsapp {
     background-color: #25D366;
-    color: #ffffff;
-    border: 1px solid transparent;
-}
-
-.whatsapp:hover {
-    color: var(--color-dark);
+    color: #fff;
 }
 
 .instagram {
-    background-color: #8a49a1;
-    color: #ffffff;
-    border: 1px solid transparent;
-
+    background-color: #111;
+    color: #fff;
 }
 
-.instagram:hover {
-    color: var(--color-accent);
+.actionButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    filter: brightness(1.1);
 }
 
 .footer {
-    padding: 0 25px 20px;
+    padding: 0 30px 25px;
     text-align: center;
     font-size: 10px;
-    color: #bbb;
+    color: #aaa;
     letter-spacing: 2px;
-    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* RESPONSIVIDADE FULLSCREEN MOBILE */
+@media (max-width: 480px) {
+    .overlay {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        border-radius: 30px 30px 0 0;
+    }
 }

@@ -35,13 +35,12 @@ export default function VideosIndexPage() {
     };
 
     return (
-        <main style={{ maxWidth: '1250px', margin: '0 auto', padding: '40px 20px' }}>
+        <main style={{ maxWidth: '1250px', margin: '0 auto', padding: 'min(40px, 8vw) 20px' }}>
             
-            {/* CABEÇALHO IDÊNTICO AO DE EVENTOS */}
             <header style={{ marginBottom: '50px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
                     <h1 style={{ 
-                        fontSize: '42px', 
+                        fontSize: 'clamp(28px, 5vw, 42px)', 
                         fontWeight: '800', 
                         color: '#1a1a1a', 
                         margin: 0, 
@@ -57,7 +56,6 @@ export default function VideosIndexPage() {
                     }} />
                 </div>
                 
-                {/* BUSCA ESTILIZADA */}
                 <div style={{ 
                     position: 'relative', 
                     maxWidth: '500px', 
@@ -85,10 +83,9 @@ export default function VideosIndexPage() {
                 </div>
             </header>
 
-            {/* GRID DE VÍDEOS REFINADO */}
             <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(350px, 100%), 1fr))', 
                 gap: '35px' 
             }}>
                 {videosFiltrados.map(episodio => (
@@ -104,16 +101,13 @@ export default function VideosIndexPage() {
                             cursor: 'pointer'
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-10px)';
-                            e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)';
+                            if (window.innerWidth > 768) e.currentTarget.style.transform = 'translateY(-10px)';
                         }}
                         onMouseOut={(e) => {
                             e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
                         }}
                     >
                         <Link href={`/videos/${episodio.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                            {/* IMAGEM DE CAPA */}
                             <div style={{ position: 'relative', width: '100%', height: '220px', overflow: 'hidden' }}>
                                 <Image 
                                     src={episodio.imagemCapaUrl} 
@@ -133,38 +127,14 @@ export default function VideosIndexPage() {
                                 )}
                             </div>
 
-                            {/* CONTEÚDO DO CARD */}
                             <div style={{ padding: '25px' }}>
-                                <p style={{ 
-                                    fontSize: '12px', 
-                                    color: 'var(--color-accent)', 
-                                    fontWeight: '800', 
-                                    marginBottom: '10px',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '1px'
-                                }}>
+                                <p style={{ fontSize: '12px', color: 'var(--color-accent)', fontWeight: '800', marginBottom: '10px', textTransform: 'uppercase' }}>
                                     {formatDate(episodio.dataLancamento)}
                                 </p>
-                                
-                                <h3 style={{ 
-                                    fontSize: '22px', 
-                                    fontWeight: '800', 
-                                    color: '#1a1a1a', 
-                                    marginBottom: '12px',
-                                    lineHeight: '1.3' 
-                                }}>
+                                <h3 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '12px', lineHeight: '1.3' }}>
                                     {episodio.titulo}
                                 </h3>
-                                
-                                <p style={{ 
-                                    fontSize: '15px', 
-                                    color: '#666', 
-                                    lineHeight: '1.6',
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: 'vertical',
-                                    overflow: 'hidden'
-                                }}>
+                                <p style={{ fontSize: '15px', color: '#666', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                     {episodio.descricao}
                                 </p>
                             </div>
@@ -172,13 +142,6 @@ export default function VideosIndexPage() {
                     </div>
                 ))}
             </div>
-
-            {/* MENSAGEM DE BUSCA VAZIA */}
-            {videosFiltrados.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '80px 0' }}>
-                    <p style={{ color: '#999', fontSize: '18px' }}>Nenhum vídeo encontrado para "{busca}".</p>
-                </div>
-            )}
         </main>
     );
 }

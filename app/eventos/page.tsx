@@ -12,7 +12,7 @@ export default function EventosPage() {
             <header style={{ marginBottom: '50px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
                     <h1 style={{ 
-                        fontSize: '42px', 
+                        fontSize: 'clamp(28px, 5vw, 42px)', 
                         fontWeight: '800', 
                         color: '#1a1a1a', 
                         margin: 0, 
@@ -32,12 +32,12 @@ export default function EventosPage() {
                 </p>
             </header>
 
-            {/* Grid de Eventos alinhado com o catálogo de vídeos */}
+            {/* Grid de Eventos - Agora Responsivo */}
             <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(350px, 100%), 1fr))', 
                 gap: '35px',
-                alignItems: 'start' // Garante que cards com imagens de alturas diferentes não estiquem
+                alignItems: 'start' 
             }}>
                 {EVENTOS_CALINDRAS.map(evento => (
                     <div 
@@ -59,7 +59,6 @@ export default function EventosPage() {
                             e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
                         }}
                     >
-                        {/* Imagem em proporção original (100%) */}
                         <div style={{ width: '100%', lineHeight: 0 }}>
                             <img 
                                 src={evento.imagem && evento.imagem.trim() !== "" ? evento.imagem : '/images/placeholder.jpg'} 
@@ -72,7 +71,6 @@ export default function EventosPage() {
                             />
                         </div>
 
-                        {/* Conteúdo Informativo */}
                         <div style={{ padding: '25px' }}>
                             <p style={{ 
                                 fontSize: '12px', 
@@ -103,8 +101,6 @@ export default function EventosPage() {
                             }}>
                                 Participe deste momento exclusivo da cultura regional com a equipe do Calindras.
                             </p>
-
-                        
                         </div>
                     </div>
                 ))}

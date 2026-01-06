@@ -1,65 +1,101 @@
 .mainContainer {
-    padding: 20px 15px;
+    padding: min(80px, 12vw) 20px;
     max-width: 1200px;
     margin: 0 auto;
-    color: var(--color-dark);
 }
 
 .headerSection {
     display: flex;
-    flex-direction: column; /* Empilha no mobile */
+    flex-direction: column;
     align-items: center;
-    gap: 30px;
-    margin-bottom: 50px;
-    text-align: center;
+    gap: 60px;
 }
 
-.avatarWrapper {
+/* CONTAINER DA "PILHA" DE FOTOS */
+.photoStack {
     position: relative;
-    width: 250px; /* Tamanho fixo menor para mobile */
-    height: 300px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 420px;
+    height: 500px; /* Altura fixa para manter a proporção da pilha */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* ESTILO BASE PARA AS FOTOS NA PILHA */
+.photoLayer {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background-color: #fff;
+    padding: 12px 12px 40px 12px; /* Borda branca estilo Polaroid */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Camadas de fundo com rotações aleatórias para efeito de pilha */
+.layerBack { transform: rotate(-6deg); z-index: 1; opacity: 0.6; }
+.layerMiddle { transform: rotate(4deg); z-index: 2; opacity: 0.8; }
+
+/* FOTO PRINCIPAL */
+.avatarWrapper {
+    z-index: 3;
+    transform: rotate(-1deg);
+    cursor: pointer;
+}
+
+.avatarWrapper:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.photoStack:hover .layerBack { transform: rotate(-12deg) translateX(-10px); }
+.photoStack:hover .layerMiddle { transform: rotate(8deg) translateX(10px); }
 
 .infoBox {
     flex: 1;
+    text-align: left;
 }
 
 .nome {
-    font-size: clamp(32px, 8vw, 48px); /* Fonte fluida */
+    font-size: clamp(42px, 8vw, 72px);
     font-weight: 900;
-    margin: 0;
+    margin: 10px 0;
+    letter-spacing: -3px;
+    color: #1a1a1a;
+    line-height: 0.85;
 }
 
 .subtitulo {
-    font-size: 20px;
-    color: var(--color-c);
-    margin-bottom: 25px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--color-accent);
+    font-weight: 800;
 }
 
 .bio {
-    font-size: 18px;
-    line-height: 1.7;
+    font-size: 19px;
+    line-height: 1.8;
     color: #333;
+    max-width: 700px;
+    text-align: justify;
 }
 
-/* RESPONSIVIDADE (Desktop) */
-@media (min-width: 768px) {
+/* Letra Capitular Premium */
+.bio p::first-letter {
+    float: left;
+    font-size: 85px;
+    line-height: 65px;
+    padding: 5px 12px 0 0;
+    font-weight: 900;
+    color: #000;
+}
+
+@media (min-width: 900px) {
     .headerSection {
-        flex-direction: row; /* Lado a lado no PC */
-        text-align: left;
+        flex-direction: row;
         align-items: flex-start;
-        gap: 50px;
-    }
-
-    .avatarWrapper {
-        width: 350px;
-        height: 400px;
-    }
-
-    .mainContainer {
-        padding: 40px 0;
+        gap: 100px;
     }
 }

@@ -7,7 +7,7 @@ export const TODOS_AUTORES: Autor[] = [
         nomeCompleto: 'Pablo Costa',
         fotoUrl: '/images/mock/pablo_cover.jpg', 
         slug: 'pablo-costa',
-        bio: "Convidado especializado em Literatura e Cultura."
+        bio: "Escritor e entusiasta das artes, é uma das vozes que ajudam a tecer a tapeçaria cultural do Caliandras. Com uma trajetória marcada pela investigação da literatura regional e das novas linguagens audiovisuais, atua como convidado principal trazendo um olhar crítico e poético sobre a produção artística contemporânea. Sua presença nas intervenções poéticas e lives do projeto reforça o compromisso do Caliandras em fomentar o diálogo entre a tradição literária e a inovação cultural."
     },
     {
         id: 'a2',

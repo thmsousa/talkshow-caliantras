@@ -4,7 +4,6 @@ import styles from './ChatBot.module.css';
 
 export default function ChatBot() {
     const [isOpen, setIsOpen] = useState(false);
-
     const openChat = useCallback(() => setIsOpen(true), []);
 
     useEffect(() => {
@@ -25,13 +24,13 @@ export default function ChatBot() {
 
             <div className={styles.chatBody}>
                 <div className={styles.bubble}>
-                    Olá! <br/> Vi que você tem interesse em um de nossos produtos. <br/><br/>
-                    Como você prefere seguir com o atendimento?
+                    Olá! <br/> Notei seu interesse em nossas obras. <br/><br/>
+                    Como podemos ajudar você hoje?
                 </div>
 
                 <div className={styles.buttonContainer}>
                     <a href="https://wa.me/5563981150250" target="_blank" className={`${styles.actionButton} ${styles.whatsapp}`}>
-                        FALAR PELO WHATSAPP
+                        CONVERSAR VIA WHATSAPP
                     </a>
                     
                     <a href="https://instagram.com/caliandrasshow" target="_blank" className={`${styles.actionButton} ${styles.instagram}`}>
@@ -41,7 +40,7 @@ export default function ChatBot() {
             </div>
             
             <div className={styles.footer}>
-                CALIANDRAS © {new Date().getFullYear()}
+                ATENDIMENTO EXCLUSIVO • {new Date().getFullYear()}
             </div>
         </div>
     );
